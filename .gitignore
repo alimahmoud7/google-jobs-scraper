@@ -1,0 +1,8 @@
+chromedriver
+
+#IDE configuration
+.idea/*
+workspace.xml
+tasks.xml
+*__pycache__*
+
