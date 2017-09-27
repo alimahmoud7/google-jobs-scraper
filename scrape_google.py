@@ -10,7 +10,7 @@ import time
 
 
 # Path of chrome driver
-chrome_driver = '/media/bluehat7/Ali Only/Freelancing/google jobs scraper/chrome_driver/chromedriver'
+chrome_driver = 'path/to/chromedriver'
 
 # Creates a new instance of the chrome driver
 browser = webdriver.Chrome(executable_path=chrome_driver)
@@ -40,7 +40,7 @@ def scrape():
     print('Please, Do not close chrome driver. '
           'It will be closed automatically after finished.')
     print('This process maybe take more than 10 minutes')
-    count_pages = 280
+    count_pages = 0
     while True:
         website_url = url.replace('st=0', 'st={}'.format(count_pages))
         try:
@@ -84,12 +84,13 @@ def parse(website_url):
     # Get all jobs links (URLs) form jobs info (jobs_content variable)
     jobs_urls = []
     for job in jobs_content:
-        job_header = job.select('h2 a')[0]
+        job_header = job.select_one('h2 a')
 
-        # Make sure that job related to Google company
-        google = job.select_one(
+        # Check that the job related to Google company
+        # To make sure that the html structure will be the same
+        company = job.select_one(
             'div.sr-content div.summary .secondary-text').get_text()
-        if google == 'Google':
+        if company != 'DeepMind':
             job_link = 'https://careers.google.com/jobs'\
                        + job_header.get('href')
             jobs_urls.append(job_link)
@@ -142,11 +143,11 @@ def parse_jobs(jobs_urls):
 
         job_dict = {
             'job_id': job_id,
-            'job_title': job_title,
-            'job_location': location,
-            'introduction': desc,
-            'responsibilities': resp,
-            'qualifications': qual
+            'title': job_title,
+            'location': location,
+            'intro': desc,
+            'resps': resp,
+            'quals': qual
         }
 
         jobs_list.append(job_dict)
