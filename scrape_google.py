@@ -158,4 +158,6 @@ def parse_jobs(jobs_urls):
 
 if __name__ == '__main__':
     data_json = scrape()
+    with open('data.json', 'w') as file:
+        json.dump(json.loads(data_json), file)
     print(data_json)
