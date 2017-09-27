@@ -1,4 +1,5 @@
-chromedriver
+chrome_driver/
+*.json
 
 #IDE configuration
 .idea/*
