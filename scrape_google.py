@@ -8,14 +8,13 @@ from bs4 import BeautifulSoup
 import json
 import time
 
-
 # Path of chrome driver
 chrome_driver = 'path/to/chromedriver'
 
 # Creates a new instance of the chrome driver
 browser = webdriver.Chrome(executable_path=chrome_driver)
 
-data = {}
+
 jobs = []
 total = 0
 
@@ -53,10 +52,11 @@ def scrape():
             break
         count_pages += 20
 
-    # Store all jobs data and total count
-    data['total'] = total
-    data['jobs'] = jobs
-
+    # Store all jobs and total count
+    data = {
+        'total': total,
+        'jobs': jobs
+    }
     return json.dumps(data)
 
 
