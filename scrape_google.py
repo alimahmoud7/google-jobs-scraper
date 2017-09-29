@@ -7,6 +7,12 @@ from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 import json
 import time
+from xvfbwrapper import Xvfb
+
+
+# create a virtual display to hide chrome driver window
+display = Xvfb()
+display.start()
 
 # Path of chrome driver
 chrome_driver = 'path/to/chromedriver'
@@ -46,6 +52,7 @@ def scrape():
             parse(website_url)
         except TimeoutException:
             browser.close()
+            display.stop()
             print('All data successfully scraped!')
             end = time.time()
             print('Time: {} minutes'.format(round((end - start) / 60), 1))
