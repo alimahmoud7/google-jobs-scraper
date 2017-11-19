@@ -7,55 +7,27 @@ from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 import json
 import time
-from xvfbwrapper import Xvfb
-
-
-# create a virtual display to hide chrome driver window
-display = Xvfb()
-display.start()
-
-# Path of chrome driver
-chrome_driver = 'path/to/chromedriver'
-
-# Creates a new instance of the chrome driver
-browser = webdriver.Chrome(executable_path=chrome_driver)
 
 
 jobs = []
 total = 0
 
 
-def scrape():
+def scrape(start_url):
     """Prepare a website url and scrape all pages"""
-
-    # Prepare the URL
-    base_url = 'https://careers.google.com/jobs'
-    params = {
-        't': 'sq',
-        'li': '20',
-        'st': '0',
-        'jlo': 'all'
-    }
-    result = requests.get(url=base_url, params=params)
-    url = result.url.replace('?', '#')
 
     # Scrape all pages
     start = time.time()
-    print('Start scraping all google jobs ...')
-    print('Please, Do not close chrome driver. '
-          'It will be closed automatically after finished.')
-    print('This process maybe take more than 10 minutes')
     count_pages = 0
     while True:
-        website_url = url.replace('st=0', 'st={}'.format(count_pages))
+        website_url = start_url.replace('st=0', 'st={}'.format(count_pages))
         try:
             parse(website_url)
         except TimeoutException:
-            browser.close()
-            display.stop()
+            browser.quit()
             print('All data successfully scraped!')
             end = time.time()
-            print('Time: {} minutes'.format(round((end - start) / 60), 1))
+            print('Time: {} minutes \n'.format(round((end - start) / 60), 1))
             break
         count_pages += 20
 
@@ -67,12 +39,12 @@ def scrape():
     return json.dumps(data)
 
 
-def parse(website_url):
+def parse(jobs_page):
     """Parse main jobs page and get all jobs URLs"""
     global total
 
     # Open first URL
-    browser.get(website_url)
+    browser.get(jobs_page)
 
     # Waite or sleep till all page data loaded
     WebDriverWait(browser, 20).until(
@@ -164,7 +136,31 @@ def parse_jobs(jobs_urls):
 
 
 if __name__ == '__main__':
-    data_json = scrape()
+    print('Start scraping all google jobs ...')
+
+    # Prepare the URL
+    base_url = 'https://careers.google.com/jobs'
+    params = {
+        't': 'sq',
+        'li': '20',
+        'st': '0',
+        'jlo': 'all'
+    }
+    result = requests.get(url=base_url, params=params)
+    url = result.url.replace('?', '#')
+    
+    print('Please, Do not close chrome driver. '
+          'It will be closed automatically after finished.')
+    print('This process maybe take more than 10 minutes')
+
+    chrome_options = webdriver.ChromeOptions()
+    # Set chrome in headless mode to hide the UI
+    # chrome_options.add_argument('headless')
+    
+    # Creates and open a new instance of the chrome driver
+    browser = webdriver.Chrome(chrome_options=chrome_options)
+
+    data_json = scrape(url)
+    print(data_json)
     with open('data.json', 'w') as file:
         json.dump(json.loads(data_json), file)
-    print(data_json)
