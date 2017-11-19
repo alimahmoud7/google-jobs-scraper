@@ -10,12 +10,8 @@
 ```
 pip install requests beautifulsoup4 selenium
 ```
-3. Download [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/downloads) for your OS
-4. Edit `scrape_google.py` file to change the path of chrome driver
-```
-# Path of chrome driver
-chrome_driver = 'path/to/chromedriver'
-```
+3. Download the latest release of [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/downloads) for your OS
+4. Extract chromedriver and move it to the same directory of `scrape_google.py` file
 5. Finally, Run `scrape_google.py`
 ```
 python scrape_google.py
