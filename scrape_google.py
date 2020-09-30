@@ -164,3 +164,4 @@ if __name__ == '__main__':
     print(data_json)
     with open('data.json', 'w') as file:
         json.dump(json.loads(data_json), file)
+# nice code bro
