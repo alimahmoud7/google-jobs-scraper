@@ -39,8 +39,7 @@ python scrape_google.py
       "intro": "introduction2", 
       "resps": "responsibilities2",
       "quals": "qualifications2"
-    },
-    ...
+    }
   ]
 }
 ```
