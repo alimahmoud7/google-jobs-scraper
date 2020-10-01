@@ -7,20 +7,20 @@
 
 1. Download and Install [Python 3](https://www.python.org/)
 2. Install requirements
-```
-pip install requests beautifulsoup4 selenium
+```python
+pip install -r requirements.txt
 ```
 3. Download the latest release of [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/downloads) for your OS
 4. Extract chromedriver and move it to the same directory of `scrape_google.py` file
 5. Finally, Run `scrape_google.py`
-```
+```bash
 python scrape_google.py
 ```
 
 **Note:** For Windows users, Please check [this video](https://drive.google.com/open?id=0BzTpKjilS_t0WU5sOGV3TS01d0U)
 
 ### Structure of JSON output 
-```
+```json
 {
   "total": "total_count",
   "jobs": [
