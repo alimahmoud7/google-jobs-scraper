@@ -2,12 +2,11 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 import json
 import time
-
 
 jobs = []
 total = 0
@@ -48,7 +47,7 @@ def parse(jobs_page):
 
     # Waite or sleep till all page data loaded
     WebDriverWait(browser, 20).until(
-        EC.presence_of_all_elements_located((By.CLASS_NAME, 'GXRRIBB-e-G'))
+        ec.presence_of_all_elements_located((By.CLASS_NAME, 'GXRRIBB-e-G'))
     )
 
     body = browser.page_source
@@ -70,7 +69,7 @@ def parse(jobs_page):
         company = job.select_one(
             'div.sr-content div.summary .secondary-text').get_text()
         if company != 'DeepMind':
-            job_link = 'https://careers.google.com/jobs'\
+            job_link = 'https://careers.google.com/jobs' \
                        + job_header.get('href')
             jobs_urls.append(job_link)
 
@@ -90,7 +89,7 @@ def parse_jobs(jobs_urls):
         # Waite till all page data loaded
         try:
             WebDriverWait(browser, 20).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.secondary-text'))
+                ec.element_to_be_clickable((By.CSS_SELECTOR, 'a.secondary-text'))
             )
         except TimeoutException:
             browser.close()
@@ -148,7 +147,7 @@ if __name__ == '__main__':
     }
     result = requests.get(url=base_url, params=params)
     url = result.url.replace('?', '#')
-    
+
     print('Please, Do not close chrome driver. '
           'It will be closed automatically after finished.')
     print('This process maybe take more than 10 minutes')
@@ -156,7 +155,7 @@ if __name__ == '__main__':
     chrome_options = webdriver.ChromeOptions()
     # Set chrome in headless mode to hide the UI
     # chrome_options.add_argument('headless')
-    
+
     # Creates and open a new instance of the chrome driver
     browser = webdriver.Chrome(chrome_options=chrome_options)
 
