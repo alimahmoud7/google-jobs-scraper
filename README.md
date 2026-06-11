@@ -1,5 +1,7 @@
 # Google Jobs Scraper
 
+<a href='https://ko-fi.com/X1Y420V5V4' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ### About the project
 > Simply, The script scrapes all the jobs from all the pages (first to final available page) located on [https://careers.google.com/jobs](https://careers.google.com/jobs#t=sq&li=20&st=0&jlo=all) and return's the result as a JSON string, Then you will have a JSON file containing  all scraped data.
 
