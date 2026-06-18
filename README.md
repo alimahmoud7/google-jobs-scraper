@@ -3,47 +3,74 @@
 <a href='https://ko-fi.com/X1Y420V5V4' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 ### About the project
-> Simply, The script scrapes all the jobs from all the pages (first to final available page) located on [https://careers.google.com/jobs](https://careers.google.com/jobs#t=sq&li=20&st=0&jlo=all) and return's the result as a JSON string, Then you will have a JSON file containing  all scraped data.
+
+This script fetches all the jobs from Google Careers for a specific location and saves them to a CSV file for easy filtering and analysis.
 
 ### How to Run the Program
 
-1. Download and Install [Python 3](https://www.python.org/)
+1. Download and Install [Python 3](https://www.python.org/) (version 3.7 or higher recommended)
 2. Install requirements
+```bash
+pip install -r requirements.txt
 ```
-pip install requests beautifulsoup4 selenium
-```
-3. Download the latest release of [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/downloads) for your OS
-4. Extract chromedriver and move it to the same directory of `scrape_google.py` file
-5. Finally, Run `scrape_google.py`
-```
+3. Run the scraper with your desired options:
+
+```bash
+# Use default location (Michigan, USA)
 python scrape_google.py
+
+# Specify a different location
+python scrape_google.py --location "San Francisco, CA, USA"
+
+# Specify both location and output file
+python scrape_google.py --location "London, UK" --output "google_jobs_london.csv"
+
+# Get help on available options
+python scrape_google.py --help
 ```
 
-**Note:** For Windows users, Please check [this video](https://drive.google.com/open?id=0BzTpKjilS_t0WU5sOGV3TS01d0U)
+The script will:
+- Fetch all available jobs for the specified location
+- Save them to the specified CSV file (default: `google_jobs.csv`)
+- Show progress as it fetches each page
 
-### Structure of JSON output 
-```
-{
-  "total": "total_count",
-  "jobs": [
-    {
-      "job_id": "id1",
-      "title": "title1",
-      "location": "location1", 
-      "intro": "introduction1", 
-      "resps": "responsibilities1",
-      "quals": "qualifications1"
-    },
-    {
-      "job_id": "id2",
-      "title": "title2",
-      "location": "location2", 
-      "intro": "introduction2", 
-      "resps": "responsibilities2",
-      "quals": "qualifications2"
-    },
-    ...
-  ]
-}
-```
+### Command Line Options
 
+- `--location`: Location to search for jobs (default: "Michigan, USA")
+- `--output`: Output CSV filename (default: `google_jobs.csv`)
+
+### Finding Location Names
+To get the correct location names for your search, visit the [Google Careers website](https://www.google.com/about/careers/applications/jobs) and:
+1. Use the location filter in the search sidebar
+2. Note the exact location names as they appear in the dropdown
+3. Use these exact names when running the script
+
+For example, if you see "New York, NY, USA" in the dropdown, use that exact format when specifying the location.
+
+### Structure of CSV output 
+The CSV file will contain the following columns:
+- `job_id`: Unique identifier for the job posting
+- `title`: Job title
+- `location`: Job location
+- `company`: Company name
+- `url`: Direct link to the job posting
+- `description`: Job description
+- `qualifications`: Required qualifications
+- `responsibilities`: Job responsibilities
+
+### Features
+- Direct API access for reliable data fetching
+- CSV output for easy filtering in Excel/Google Sheets
+- Progress tracking during fetching
+- Rate limiting to be respectful to Google's servers
+- Command-line options for location and output file
+
+### Customization
+You can modify the script to:
+- Add or remove fields from the CSV output
+- Add additional filtering options
+- Change the default location or output filename
+- Add more command-line options
+
+### Contributing
+If you'd like to contribute to the project, please fork this repository, make your changes, and submit a pull request. Feel free to report issues or suggest improvements.
